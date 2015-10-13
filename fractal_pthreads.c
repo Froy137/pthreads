@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
   maxdepth = atoi(argv[2]);
   if (maxdepth < 10) {fprintf(stderr, "max_depth must be at least 10\n"); exit(-1);}
   thread_count = strtol(argv[3],NULL,10);
-  printf("computing %d by %d fractal with a maximum depth of %d with %d threads \n", width, width, maxdepth,thread_count);
+  printf("computing %d by %d fractal with a maximum depth of %d with %llu threads \n", width, width, maxdepth,thread_count);
 
   // allocate array
   cnt = (unsigned char *)malloc(width * width * sizeof(unsigned char));
