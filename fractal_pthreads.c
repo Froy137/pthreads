@@ -92,22 +92,22 @@ int main(int argc, char *argv[])
   pthread_t* thread_handles;
   thread_count = strtol(argv[3],NULL,10);
   
-  thread_count--;//minus one thread cuz master will work too!
+  //thread_count--;//minus one thread cuz master will work too!
   
-  thread_handles = malloc (thread_count*sizeof(pthread_t));
+  thread_handles = malloc (thread_count-1*sizeof(pthread_t));
     
 	// start time
   gettimeofday(&start, NULL);
   
   //generating -1 thread so that master thread can work too.
-  for (thread=0;thread<thread_count;thread++){
+  for (thread=0;thread<thread_count-1;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
 	//master thread doing some work
 	//thread_count++; 
 	//pthreadCalc((void*)thread_count);
   
-  for (thread=0;thread<thread_count;thread++){
+  for (thread=0;thread<thread_count-1;thread++){
 	  pthread_join(thread_handles[thread],NULL);
   }
   
