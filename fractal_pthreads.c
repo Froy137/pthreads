@@ -60,9 +60,10 @@ static void WriteBMP(const int x, const int y, const unsigned char* const bmp, c
  }
  
  //global
-unsigned char *cnt;
-int width,maxdepth;
-int thread_count;
+static unsigned char *cnt;
+static int width,maxdepth;
+static int thread_count;
+
 int main(int argc, char *argv[])
 {
   //int row, col, depth, width, maxdepth;
@@ -85,21 +86,27 @@ int main(int argc, char *argv[])
   cnt = (unsigned char *)malloc(width * width * sizeof(unsigned char));
   if (cnt == NULL) {fprintf(stderr, "could not allocate memory\n"); exit(-1);}
 
-  // start time
-  gettimeofday(&start, NULL);
+
 
   long thread;
   pthread_t* thread_handles;
   thread_count = strtol(argv[3],NULL,10);
-  thread_handles = malloc (thread_count*sizeof(pthread_t));
   
-  for (thread=1;thread<thread_count;thread++){
+  thread_count--;//minus one thread cuz master will work too!
+  
+  thread_handles = malloc (thread_count*sizeof(pthread_t));
+    
+	// start time
+  gettimeofday(&start, NULL);
+  
+  //generating -1 thread so that master thread can work too.
+  for (thread=0;thread<thread_count-1;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
 	//master thread doing some work 
-	pthreadCalc(0);
+	pthreadCalc(thread_count+1);
   
-  for (thread=1;thread<thread_count;thread++){
+  for (thread=0;thread<thread_count-1;thread++){
 	  pthread_join(thread_handles[thread],NULL);
   }
   
