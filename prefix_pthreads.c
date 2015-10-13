@@ -1,42 +1,15 @@
-/*
-PrefixSum v1.0: This code computes the inclusive prefix sum of an array.
- 
-Copyright (c) 2015, Texas State University. All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification,
-are permitted for academic, research, experimental, or personal use provided
-that the following conditions are met:
+//Author: Froylan Morales
 
-   * Redistributions of source code must retain the above copyright notice,
-     this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice,
-     this list of conditions and the following disclaimer in the documentation
-     and/or other materials provided with the distribution.
-   * Neither the name of Texas State University nor the names of its
-     contributors may be used to endorse or promote products derived from this
-     software without specific prior written permission.
-
-For all other uses, please contact the Office for Commercialization and Industry
-Relations at Texas State University <http://www.txstate.edu/ocir/>.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Author: Martin Burtscher <burtscher@txstate.edu>
-*/
 
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
+#include <pthread.h>
+
+static void* pthreadCalc(void* rank);
+
 
 static int f(int val)
 {
@@ -50,6 +23,7 @@ static void prefixSumA(int data[], const int size)
   }
 }
 
+/*
 static void prefixSumB(int data[], const int size)
 {
   for (int dist = 1; dist < size; dist *= 2) {
@@ -58,20 +32,29 @@ static void prefixSumB(int data[], const int size)
     }
   }
 }
+*/
+
+//global vars
+static long long thread_count;
+static int*arrayA,arrayB;
+
+
+
 
 int main(int argc, char* argv[])
 {
-  printf("Prefix Sum v1.0 [serial]\n");
+  printf("Prefix Sum v1.0 [pthreads]\n");
 
   // check command line
-  if (argc != 2) {fprintf(stderr, "usage: %s size\n", argv[0]); exit(-1);}
+  if (argc != 3) {fprintf(stderr, "usage: %s size\n", argv[0]); exit(-1);}
   int size = atoi(argv[1]);
   if (size < 1) {fprintf(stderr, "size is too small: %d\n", size); exit(-1);}
-  printf("configuration: %d elements\n", size);
-
+  thread_count = strtol(argv[2],NULL,10);
+    printf("configuration: %d elements, %llu threads\n", size,thread_count);
+	
   // allocate arrays
-  int* arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
-  int* arrayB = (int*)malloc(sizeof(int) * size);  if (arrayB == NULL) {fprintf(stderr, "cannot allocate arrayB\n");  exit(-1);}
+   arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
+   arrayB = (int*)malloc(sizeof(int) * size);  if (arrayB == NULL) {fprintf(stderr, "cannot allocate arrayB\n");  exit(-1);}
 
   // initialize
   for (int i = 0; i < size; i++) {
@@ -81,7 +64,23 @@ int main(int argc, char* argv[])
   // time the prefix sum computation
   struct timeval start, end;
   gettimeofday(&start, NULL);
-  prefixSumB(arrayB, size);
+  //prefixSumB(arrayB, size);
+  
+    long thread;
+    pthread_t* thread_handles;
+  
+   thread_handles = malloc ((thread_count-1.0)*sizeof(pthread_t));
+    
+    //generating -1 thread so that master thread can work too.
+  for (thread=0;thread<thread_count-1.0;thread++){
+	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
+  }
+  
+  
+  
+  
+  
+  
   gettimeofday(&end, NULL);
 
   // print performance info
@@ -97,5 +96,18 @@ int main(int argc, char* argv[])
 
   free(arrayA);  free(arrayB);
   return 0;
+}
+
+static void* pthreadCalc(void* rank){
+	long long my_rank = (long long)rank;
+	int my_start = my_rank * size / thread_count;
+	int my_end = (my_rank + 1) * size / thread_count;
+	
+	int myS=my_end-my_start;
+	int tempArr=[myS];
+	
+	prefixSumA()
+	
+	return NULL;
 }
 
