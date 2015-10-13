@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
   
   //thread_count--;//minus one thread cuz master will work too!
   
-  thread_handles = malloc ((thread_count)*sizeof(pthread_t));
+  thread_handles = malloc ((thread_count-1.0)*sizeof(pthread_t));
     
 	// start time
   gettimeofday(&start, NULL);
