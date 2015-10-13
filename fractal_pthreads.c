@@ -62,7 +62,7 @@ static void WriteBMP(const int x, const int y, const unsigned char* const bmp, c
  //global
 static unsigned char *cnt;
 static int width,maxdepth;
-static int thread_count;
+static long long thread_count;
 
 int main(int argc, char *argv[])
 {
@@ -100,13 +100,14 @@ int main(int argc, char *argv[])
   gettimeofday(&start, NULL);
   
   //generating -1 thread so that master thread can work too.
-  for (thread=0;thread<thread_count-1;thread++){
+  for (thread=0;thread<thread_count;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
-	//master thread doing some work 
-	pthreadCalc(thread_count+1);
+	//master thread doing some work
+	//thread_count++; 
+	//pthreadCalc((void*)thread_count);
   
-  for (thread=0;thread<thread_count-1;thread++){
+  for (thread=0;thread<thread_count;thread++){
 	  pthread_join(thread_handles[thread],NULL);
   }
   
