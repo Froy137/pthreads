@@ -94,25 +94,26 @@ int main(int argc, char *argv[])
   
   //thread_count--;//minus one thread cuz master will work too!
   
-  thread_handles = malloc (thread_count-1*sizeof(pthread_t));
+  thread_handles = malloc ((thread_count)*sizeof(pthread_t));
     
 	// start time
   gettimeofday(&start, NULL);
-  
+ 
   //generating -1 thread so that master thread can work too.
-  for (thread=0;thread<thread_count-1;thread++){
+  for (thread=0;thread<thread_count-1.0;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
 	//master thread doing some work
 	//thread_count++; 
-	//pthreadCalc((void*)thread_count);
+	pthreadCalc((void*)thread_count-1);
   
-  for (thread=0;thread<thread_count-1;thread++){
+  for (thread=0;thread<thread_count-1.0;thread++){
 	  pthread_join(thread_handles[thread],NULL);
   }
   
   free(thread_handles);
-  // end time
+  
+// end time
   gettimeofday(&end, NULL);
   double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
   printf("compute time: %.4f s\n", runtime);
@@ -130,8 +131,8 @@ int main(int argc, char *argv[])
  static void* pthreadCalc(void *rank){
 	//long long my_rank=(long)rank;
 	long long my_rank = (long long)rank;
-	int my_start = my_rank * width / thread_count-1;
-	int my_end = (my_rank + 1) * width / thread_count-1;
+	int my_start = my_rank * width / (thread_count);
+	int my_end = (my_rank + 1) * width / (thread_count);
 	
 	int row, col,depth;
 	double cx, cy, dx, dy, x, y, x2, y2;
