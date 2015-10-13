@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
  static void* pthreadCalc(void *rank){
 	//long long my_rank=(long)rank;
 	long long my_rank = (long long)rank;
-	int my_start = my_rank * width / thread_count;
-	int my_end = (my_rank + 1) * width / thread_count;
+	int my_start = my_rank * width / thread_count-1;
+	int my_end = (my_rank + 1) * width / thread_count-1;
 	
 	int row, col,depth;
 	double cx, cy, dx, dy, x, y, x2, y2;
