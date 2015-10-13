@@ -79,8 +79,8 @@ int main(int argc, char *argv[])
   if (width < 10) {fprintf(stderr, "edge_length must be at least 10\n"); exit(-1);}
   maxdepth = atoi(argv[2]);
   if (maxdepth < 10) {fprintf(stderr, "max_depth must be at least 10\n"); exit(-1);}
-
-  printf("computing %d by %d fractal with a maximum depth of %d\n", width, width, maxdepth);
+  thread_count = strtol(argv[3],NULL,10);
+  printf("computing %d by %d fractal with a maximum depth of %d with %d threads \n", width, width, maxdepth,thread_count);
 
   // allocate array
   cnt = (unsigned char *)malloc(width * width * sizeof(unsigned char));
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
   long thread;
   pthread_t* thread_handles;
-  thread_count = strtol(argv[3],NULL,10);
+ 
   
   //thread_count--;//minus one thread cuz master will work too!
   
