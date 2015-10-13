@@ -6,7 +6,7 @@
 #include <malloc.h>
 #include <assert.h>
 #include <sys/time.h>
-#inlcude <pthread.h>
+#include <pthread.h>
 
 #define delta 0.00578
 #define xMin 0.74395
@@ -61,8 +61,8 @@ static void WriteBMP(const int x, const int y, const unsigned char* const bmp, c
  
  //global
 unsigned char *cnt;
-int width;
-
+int width,maxdepth;
+int thread_count;
 int main(int argc, char *argv[])
 {
   //int row, col, depth, width, maxdepth;
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
   printf("Fractal v1.3 [serial]\n");
 
   // check command line
-  if (argc != 3) {fprintf(stderr, "usage: %s edge_length max_depth\n", argv[0]); exit(-1);}
+  if (argc != 4) {fprintf(stderr, "usage: %s edge_length max_depth\n", argv[0]); exit(-1);}
   width = atoi(argv[1]);
   if (width < 10) {fprintf(stderr, "edge_length must be at least 10\n"); exit(-1);}
   maxdepth = atoi(argv[2]);
@@ -89,12 +89,12 @@ int main(int argc, char *argv[])
   gettimeofday(&start, NULL);
 
   long thread;
-  pthread* thread_handles;
-  thread_count = strtol(argv[1],NULL,10);
+  pthread_t* thread_handles;
+  thread_count = strtol(argv[3],NULL,10);
   thread_handles = malloc (thread_count*sizeof(pthread_t));
   
   for (thread=0;thread<thread_count;thread++){
-	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,void* thread);
+	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
   
   /*
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
   }
 */
   for (thread=0;thread<thread_count;thread++){
-	  pthread_join(&thread_handles[thread],NULL);
+	  pthread_join(thread_handles[thread],NULL);
   }
   
   free(thread_handles);
@@ -142,10 +142,10 @@ int main(int argc, char *argv[])
  static void* pthreadCalc(void *rank){
 	//long long my_rank=(long)rank;
 	long long my_rank = (long long)rank;
-	int my_start = rank * width / threads;
-	int my_end = (rank + 1) * width / threads;
+	int my_start = my_rank * width / thread_count;
+	int my_end = (my_rank + 1) * width / thread_count;
 	
-	int row, col,maxdepth,depth,;
+	int row, col,depth;
 	double cx, cy, dx, dy, x, y, x2, y2;
 	
 	  // compute fractal
