@@ -93,33 +93,13 @@ int main(int argc, char *argv[])
   thread_count = strtol(argv[3],NULL,10);
   thread_handles = malloc (thread_count*sizeof(pthread_t));
   
-  for (thread=0;thread<thread_count;thread++){
+  for (thread=1;thread<thread_count;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
+	//master thread doing some work 
+	pthreadCalc(0);
   
-  /*
-  // compute fractal
-  dx = (xMax - xMin) / width;
-  dy = (yMax - yMin) / width;
-  for (row = 0; row < width; row++) {
-    cy = yMin + row * dy;
-    for (col = 0; col < width; col++) {
-      cx = xMin + col * dx;
-      x = -cx;
-      y = -cy;
-      depth = maxdepth;
-      do {
-        x2 = x * x;
-        y2 = y * y;
-        y = 2 * x * y - cy;
-        x = x2 - y2 - cx;
-        depth--;
-      } while ((depth > 0) && ((x2 + y2) <= 5.0));
-      cnt[row * width + col] = depth & 255;
-    }
-  }
-*/
-  for (thread=0;thread<thread_count;thread++){
+  for (thread=1;thread<thread_count;thread++){
 	  pthread_join(thread_handles[thread],NULL);
   }
   
