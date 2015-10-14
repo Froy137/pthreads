@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
                                 pthread_t* thread_handles;
 
                                thread_handles = malloc ((thread_count-1.0)*sizeof(pthread_t));
-                               printf("stage0");
+                               printf("stage0\n");
 
 
                                 for(int v=0;v<size;v++){
@@ -129,10 +129,16 @@ int main(int argc, char* argv[])
                                     lastPrefix[u]=arrayC[r];   
                                 }
 
+                                        for(int v=0;v<thread_count;v++){
+                                 printf("lastPrefix %d\n",lastPrefix[v]);   
+                                }
+    
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
 
-
+                                        for(int v=0;v<thread_count;v++){
+                                 printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
+                                }
     
     
                                 //create threads again
