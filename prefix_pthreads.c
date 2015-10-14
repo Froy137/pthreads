@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
                               }
 
-                               printf("stage2"); 
+                                
                                 //master doing work too.      
                                 pthreadCalc((void*)thread_count-1);
 
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
     
     
     
-                               printf("stage3"); 
+                                
                                 //master copy carry values to new array .
                                 //int chunk_size = (size / thread_count)-1.0;
 
@@ -149,6 +149,10 @@ int main(int argc, char* argv[])
                                   pthread_join(thread_handles[thread],NULL);
                               }
 
+    
+                                            for(int v=0;v<size;v++){
+                                 printf("Array C after Prefix+ %d\n",arrayC[v]);   
+                                }
                                 free(thread_handles);
                               gettimeofday(&end, NULL);
 
