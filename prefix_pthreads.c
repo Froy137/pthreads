@@ -144,7 +144,15 @@ arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr,
   // compare results
   prefixSumA(arrayA, size);
   for (int i = 0; i < size; i++) {
-    if (arrayA[i] != arrayC[i]) {fprintf(stderr, "result mismatch at position %d\n", i);  exit(-1);}
+    if (arrayA[i] != arrayC[i]) 
+    {
+        fprintf(stderr, "result mismatch at position %d\n", i);  
+        
+        printf("current A:%d current B:%d\n",arrayA[i],arrayB[i]);
+        printf("Next A:%d Next B:%d\n",arrayA[i+1],arrayB[i+1]);
+        exit(-1);
+    
+    }
   }
 
   free(arrayA);  free(arrayB);
