@@ -52,23 +52,21 @@ int main(int argc, char* argv[])
 
                                 thread_count = strtol(argv[2],NULL,10);
 
-                               printf("stage1\n"); 
+                              
                                printf("configuration: %d elements, %llu threads.\n", size,thread_count);	
-                               printf("stage1"); 
-
 
 
                             // allocate arrays
                                arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
 
-                               printf("stage1"); 
+                                
                             arrayB = (int*)malloc(sizeof(int) * size);  if (arrayB == NULL) {fprintf(stderr, "cannot allocate arrayB\n");  exit(-1);}
 
-                               printf("stage1"); 
+                               
                             arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
                                lastPrefix= (int*)malloc(sizeof(int) * thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");                                  exit(-1);}
 
-                               printf("stage1"); 
+                               
 
 
                             // initialize
@@ -77,7 +75,7 @@ int main(int argc, char* argv[])
                                 arrayA[i] = arrayB[i] = f(i);
                               }
 
-                               printf("stage1"); 
+                               
                               // time the prefix sum computation
                               struct timeval start, end;
                               gettimeofday(&start, NULL);
@@ -87,7 +85,7 @@ int main(int argc, char* argv[])
                                 pthread_t* thread_handles;
 
                                thread_handles = malloc ((thread_count-1.0)*sizeof(pthread_t));
-                               printf("stage0\n");
+                               
 
 
                                // for(int v=0;v<size;v++){
