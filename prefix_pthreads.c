@@ -159,6 +159,11 @@ int main(int argc, char* argv[])
 
                               // compare results
                               prefixSumA(arrayA, size);
+    
+                                        for(int v=0;v<size;v++){
+                                 printf("Array A after Prefix+ %d\n",arrayA[v]);   
+                                }
+    
                               for (int i = 0; i < size; i++) {
                                 if (arrayA[i] != arrayC[i]) 
                                 {
