@@ -90,6 +90,10 @@ int main(int argc, char* argv[])
                                printf("stage0");
 
 
+                                for(int v=0;v<size;v++){
+                                 printf("Array A %d\n",arrayA[v]);   
+                                }
+    
                                 //generating -1 thread so that master thread can work too.
                               for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
@@ -104,31 +108,31 @@ int main(int argc, char* argv[])
                                   pthread_join(thread_handles[thread],NULL);
                               }
     
+                                    for(int v=0;v<size;v++){
+                                 printf("Array C %d\n",arrayC[v]);   
+                                }
     
     
     
     
-    
-    
-                                free(thread_handles);
     
                                printf("stage3"); 
                                 //master copy carry values to new array .
-                                int chunk_size = (size / thread_count)-1.0;
+                                //int chunk_size = (size / thread_count)-1.0;
 
 
                              //loading the carries to new array
                                 //for(int chk=chunk_size;chk<size;chk+chunk_size){
-                                 for(int u=0;u<thread_count;u++){
-                                int r=(u+1)*size/thread_count;
-                                lastPrefix[u]=arrayC[r];   
+                                 
+                                for(int u=0;u<thread_count;u++){
+                                    int r=(u+1)*size/thread_count;
+                                    lastPrefix[u]=arrayC[r];   
                                 }
 
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
 
-                                thread_handles = malloc ((thread_count-1.0)*sizeof(pthread_t));        
-    
+
     
     
                                 //create threads again
@@ -184,16 +188,18 @@ static void* pthreadCalc(void* rank){
 	int tempArr[myS];
 	int c=0;
     //getting partial array.
-    for(int p=my_start;p<my_end;p++,c++){
+    for(int p=my_start;p<my_end;p++){
         //loading the corresponding part of the array into temp
         tempArr[c]=arrayA[p];
+        c++;
     }
     
 	prefixSumA(tempArr,myS);
 	
     c=0;
-    for(int y=my_start;y<my_end;y++,c++){
+    for(int y=my_start;y<my_end;y++){
         arrayC[y]=tempArr[c];
+        c++;
     }
     
 	return NULL;
