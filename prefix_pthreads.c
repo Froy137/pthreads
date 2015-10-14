@@ -1,7 +1,4 @@
-
 //Author: Froylan Morales
-
-
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,7 +6,6 @@
 #include <pthread.h>
 
 static void* pthreadCalc(void* rank);
-
 
 static int f(int val)
 {
@@ -36,9 +32,9 @@ static void prefixSumB(int data[], const int size)
 
 //global vars
 static long long thread_count;
-static int*arrayA,arrayB;
-
-
+static int*arrayA,arrayB,arrayC;
+static int *lastPrefix;
+int size;
 
 
 int main(int argc, char* argv[])
@@ -47,17 +43,21 @@ int main(int argc, char* argv[])
 
   // check command line
   if (argc != 3) {fprintf(stderr, "usage: %s size\n", argv[0]); exit(-1);}
-  int size = atoi(argv[1]);
+  size = atoi(argv[1]);
   if (size < 1) {fprintf(stderr, "size is too small: %d\n", size); exit(-1);}
-  thread_count = strtol(argv[2],NULL,10);
+  
+    thread_count = strtol(argv[2],NULL,10);
     printf("configuration: %d elements, %llu threads\n", size,thread_count);
 	
   // allocate arrays
    arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
    arrayB = (int*)malloc(sizeof(int) * size);  if (arrayB == NULL) {fprintf(stderr, "cannot allocate arrayB\n");  exit(-1);}
-
+   arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
+   lastPrefix= (int*)malloc(sizeof(int) * thread_count);  if (partialPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");  exit(-1);}
+    
   // initialize
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < size; i++) 
+  {
     arrayA[i] = arrayB[i] = f(i);
   }
 
@@ -75,12 +75,41 @@ int main(int argc, char* argv[])
   for (thread=0;thread<thread_count-1.0;thread++){
 	  pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
   }
+   
+    //master doing work too.      
+    pthreadCalc((void*)thread_count-1);
   
+    //join threads
+    for (thread=0;thread<thread_count-1.0;thread++){
+	  pthread_join(thread_handles[thread],NULL);
+  }
   
+    //master copy carry values to new array .
+  	int chunk_size = (size / thread_count)-1.0;
+	int c=0;
+    //loading the carries to new array
+    for(int chk=chunk_size;chk<size;chk+chuck_size,c++){
+     lastPrefix[c]=arrayC[chk]   
+    }
   
-  
-  
-  
+    //doing prefix sum on the carries
+    prefixA(lastPrefix,thread_count);
+    
+    
+    //create threads again
+    for (thread=0;thread<thread_count-1.0;thread++){
+	  pthread_create(&thread_handles[thread],NULL,pthreadCalc2,(void*) thread);
+  }
+   
+      //master doing work too.      
+    pthreadCalc2((void*)thread_count-1);
+    
+    
+        //join threads
+    for (thread=0;thread<thread_count-1.0;thread++){
+	  pthread_join(thread_handles[thread],NULL);
+  }
+    
   gettimeofday(&end, NULL);
 
   // print performance info
@@ -91,7 +120,7 @@ int main(int argc, char* argv[])
   // compare results
   prefixSumA(arrayA, size);
   for (int i = 0; i < size; i++) {
-    if (arrayA[i] != arrayB[i]) {fprintf(stderr, "result mismatch at position %d\n", i);  exit(-1);}
+    if (arrayA[i] != arrayC[i]) {fprintf(stderr, "result mismatch at position %d\n", i);  exit(-1);}
   }
 
   free(arrayA);  free(arrayB);
@@ -104,10 +133,40 @@ static void* pthreadCalc(void* rank){
 	int my_end = (my_rank + 1) * size / thread_count;
 	
 	int myS=my_end-my_start;
+    
+    //creating a temp array for local prefix solution
 	int tempArr=[myS];
+	int c=0;
+    //getting partial array.
+    for(int p=my_start;p<my_end;p++,c++){
+        //loading the corresponding part of the array into temp
+        tempArr[c]=arrayA[p];
+    }
+    
+	prefixSumA(tempArr,myS);
 	
-	prefixSumA()
-	
+    c=0;
+    for(int y=my_start;y<my_end;y++,c++){
+        arrayC[y]=tempArr[c];
+    }
+    
 	return NULL;
 }
 
+static void* pthreadCalc2(void* rank){
+	long long my_rank = (long long)rank;
+	int my_start = my_rank * size / thread_count;
+	int my_end = (my_rank + 1) * size / thread_count;
+	
+	int myS=my_end-my_start;
+    
+    //get your index from lastPrefix and subtract last value from arrayC
+    int additionValue=lastPrefix[rank]-arrayC[my_end];
+    
+   for(int y=my_start;y<my_end;y++,c++){
+        arrayC[y]+= additionValue;
+    }
+    
+    
+	return NULL;
+}
