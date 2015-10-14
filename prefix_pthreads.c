@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
                                  
                                 for(int u=0;u<thread_count;u++){
                                     int r=(u+1)*size/thread_count;
-                                    lastPrefix[u]=arrayC[r];   
+                                    lastPrefix[u]=arrayC[r-1];   
                                 }
 
                                         for(int v=0;v<thread_count;v++){
