@@ -181,8 +181,8 @@ int main(int argc, char* argv[])
                                 {
                                     fprintf(stderr, "result mismatch at position %d\n", i);  
 
-                                  //  printf("current A:%d current B:%d\n",arrayA[i],arrayB[i]);
-                                //    printf("Next A:%d Next B:%d\n",arrayA[i+1],arrayB[i+1]);
+                                    printf("current A:%d current C:%d\n",arrayA[i],arrayC[i]);
+                                    printf("Next A:%d Next C:%d\n",arrayA[i+1],arrayC[i+1]);
                                     exit(-1);
 
                                 }
