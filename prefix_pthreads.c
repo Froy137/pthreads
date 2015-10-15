@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 
                                 long templ=thread_count-1.0;
                                 //master doing work too.      
-                                pthreadCalc((void*)templ);
+                             //   pthreadCalc((void*)templ);
 
                                 //join threads
                                 for (thread=0;thread<thread_count;thread++){
