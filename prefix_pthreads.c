@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
                                 }
     
                                 //generating -1 thread so that master thread can work too.
-                              for (thread=0;thread<thread_count-1.0;thread++){
+                              for (thread=0;thread<thread_count;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
                               }
 
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
                                 pthreadCalc((void*)templ);
 
                                 //join threads
-                                for (thread=0;thread<thread_count-1.0;thread++){
+                                for (thread=0;thread<thread_count;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
 			printf("JOINED THREADS 1\n");
