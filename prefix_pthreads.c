@@ -106,14 +106,14 @@ int main(int argc, char* argv[])
 			printf("threadcount:%llu\n",thread_count);
                                for(int v=0;v<size;v++){
 								if(v > size-10)//print last chunk
-                                   printf("Array C %d\n",arrayC[v]);   
+                                  printf("Array C %d\n",arrayC[v]);   
                                 }
     
     
     
     
     
-                                printf("in PRE bad area?");
+                                //printf("in PRE bad area?");
                                 //master copy carry values to new array .
                                 //int chunk_size = (size / thread_count)-1.0;
 
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
                                 //for(int chk=chunk_size;chk<size;chk+chunk_size){
                                  
                                 for(int u=0;u<thread_count;u++){
-									printf("in bad area?");
+								//	printf("in bad area?");
                                     long r=(u+1)*size/thread_count;
 									r=r-1.0;;
                                     lastPrefix[u]=arrayC[r];   
@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
 
                                  for(int v=0;v<thread_count;v++){
 									// if(v > size-10)//print last chunk
-                                 printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
+                                printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
                                 }
     
     
@@ -237,7 +237,7 @@ static void* pthreadCalc(void* rank){
 	*/
 	for(int t=0;t<myS;t++){
 		
-		printf("tempPREXI CONT: %d\n",tempArr[t]);
+		//printf("tempPREXI CONT: %d\n",tempArr[t]);
 	}
 	
 	
