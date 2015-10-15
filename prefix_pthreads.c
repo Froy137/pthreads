@@ -204,7 +204,7 @@ static void* pthreadCalc(void* rank){
 	long my_end = (my_rank + 1.0) * size / thread_count;
 	printf("\nrank in %llu:\n",my_rank);
 	long myS=size/thread_count;
-	if(my_rank == thread_count)
+	if(my_rank == thread_count-1)
 	my_end++;
 
 	printf("\nstart in %llu:    %llu:\n",my_rank,my_start);
