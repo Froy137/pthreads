@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
                             // initialize
                               for (int i = 0; i < size; i++) 
                               {
-                                arrayA[i] = arrayB[i] = f(i);
+                                arrayA[i]= f(i);
                               }
 
                                
