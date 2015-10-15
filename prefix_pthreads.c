@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
-    printf("JOINED THREADS 1");
+							printf("JOINED THREADS 1\n");
                                for(int v=0;v<size;v++){
 								if(v > size-10)//print last chunk
                                    printf("Array C %d\n",arrayC[v]);   
@@ -231,13 +231,14 @@ static void* pthreadCalc(void* rank){
 
 static void* pthreadCalc2(void* rank){
 	long long my_rank = (long long)rank;
-	int my_start = my_rank * size / thread_count;
-	int my_end = (my_rank + 1.0) * size / thread_count;
+	long my_start = my_rank * size / thread_count;
+	long my_end = (my_rank + 1.0) * size / thread_count;
 	
     
     //get your index from lastPrefix and subtract last value from arrayC
-    //long tempo=my_end-1.0;
-    int additionValue=lastPrefix[my_rank]-arrayC[my_end-1];
+    long tempo=my_end-1.0;
+	
+    int additionValue=lastPrefix[my_rank]-arrayC[tempo];
     
    for(int y=my_start;y<my_end;y++){
         arrayC[y]+=additionValue;
