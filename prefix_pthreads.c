@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
                                 }
 
                                for(int v=0;v<thread_count;v++){
-										if(v > size-10)//print last chunk
+										//if(v > size-10)//print last chunk
 											printf("lastPrefix %d\n",lastPrefix[v]);   
                                 }
     
@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
                                 prefixSumA(lastPrefix,(int)thread_count);
 
                                  for(int v=0;v<thread_count;v++){
-									 if(v > size-10)//print last chunk
+									// if(v > size-10)//print last chunk
                                  printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
                                 }
     
