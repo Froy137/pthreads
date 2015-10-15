@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 
                                 
                                 //master doing work too.      
-                                pthreadCalc((void*)thread_count-1.0);
+                                pthreadCalc((void*)(thread_count-1.0));
 
                                 //join threads
                                 for (thread=0;thread<thread_count-1.0;thread++){
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
                               }
 
                                   //master doing work too.      
-                                pthreadCalc2((void*)thread_count-1.0);
+                                pthreadCalc2((void*)(thread_count-1.0));
 
 
                                     //join threads
