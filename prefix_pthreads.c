@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 
 
                                 for(int v=0;v<size;v++){
-								if(v>v/()thread_count*(thread_count-1))//print last chunk
+								if(v>v/(thread_count*(thread_count-1))//print last chunk
                                     printf("Array A %d\n",arrayA[v]);   
                                 }
     
