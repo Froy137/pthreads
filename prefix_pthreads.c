@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
-    
+    printf("JOINED THREADS 1");
                                for(int v=0;v<size;v++){
 								if(v > size-10)//print last chunk
                                    printf("Array C %d\n",arrayC[v]);   
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     
     
     
-                                
+                                printf("in PRE bad area?");
                                 //master copy carry values to new array .
                                 //int chunk_size = (size / thread_count)-1.0;
 
