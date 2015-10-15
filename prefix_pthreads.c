@@ -86,18 +86,18 @@ int main(int argc, char* argv[])
 								if(v > size-10)//print last chunk
                                     printf("Array A %d\n",arrayA[v]);   
                                 }
-    
+									long templ=thread_count-1.0;
                                 //generating -1 thread so that master thread can work too.
-                              for (thread=0;thread<thread_count;thread++){
+                              for (thread=0;thread<templ;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
                               }
 
-                                long templ=thread_count-1.0;
+                               
                                 //master doing work too.      
                              //   pthreadCalc((void*)templ);
 
                                 //join threads
-                                for (thread=0;thread<thread_count;thread++){
+                                for (thread=0;thread<templ;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
 			printf("JOINED THREADS 1\n");
