@@ -123,18 +123,18 @@ int main(int argc, char* argv[])
                                     lastPrefix[u]=arrayC[r-1];   
                                 }
 
-                                       // for(int v=0;v<thread_count;v++){
-									//		if(v > size-10)//print last chunk
-									//		printf("lastPrefix %d\n",lastPrefix[v]);   
-                                //}
+                                        for(int v=0;v<thread_count;v++){
+										if(v > size-10)//print last chunk
+											printf("lastPrefix %d\n",lastPrefix[v]);   
+                                }
     
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
 
-                              //   for(int v=0;v<thread_count;v++){
-								//	 if(v > size-10)//print last chunk
-                              //   printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
-                              //  }
+                                 for(int v=0;v<thread_count;v++){
+									 if(v > size-10)//print last chunk
+                                 printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
+                                }
     
     
                                 //create threads again
@@ -153,10 +153,10 @@ int main(int argc, char* argv[])
                               }
 
     
-                              // for(int v=0;v<size;v++){
-								//   if(v > size-10)//print last chunk
-                              //     printf("Array C after Prefix+ %d\n",arrayC[v]);   
-                              //  }
+                               for(int v=0;v<size;v++){
+								   if(v > size-10)//print last chunk
+                                   printf("Array C after Prefix+ %d\n",arrayC[v]);   
+                                }
                                
                               gettimeofday(&end, NULL);
 
