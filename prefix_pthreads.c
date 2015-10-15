@@ -197,29 +197,29 @@ static void* pthreadCalc(void* rank){
 	long long my_rank = (long long)rank;
 	long my_start = my_rank * size / thread_count;
 	long my_end = (my_rank + 1.0) * size / thread_count;
-	printf("\nrank in %llu:\n",my_rank);
+	//printf("\nrank in %llu:\n",my_rank);
 	long myS=size/thread_count;
-    printf("\nrank in mys%llu:\n",my_rank);
+   // printf("\nrank in mys%llu:\n",my_rank);
     //creating a temp array for local prefix solution
 	//int tempArr[myS];
 	int *tempArr= (int*)malloc(sizeof(int) * myS);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");exit(-1);}
 	int c=0;
-    printf("\nrank in tempArr%llu:\n",my_rank);
+   // printf("\nrank in tempArr%llu:\n",my_rank);
 	//getting partial array.
 	    for(int p=my_start;p<my_end;p++){
         //loading the corresponding part of the array into temp
         tempArr[c]=arrayA[p];
         c++;
     }
-    printf("\nrank in loading%llu:\n",my_rank);
+   // printf("\nrank in loading%llu:\n",my_rank);
 	prefixSumA(tempArr,myS);
-	printf("done with prefix");
+	//printf("done with prefix");
     c=0;
     for(int y=my_start;y<my_end;y++){
         arrayC[y]=tempArr[c];
         c++;
     }
-    printf("\nrank in assign%llu:\n",my_rank);
+    //printf("\nrank in assign%llu:\n",my_rank);
 	free(tempArr);
 	return NULL;
 }
