@@ -184,7 +184,7 @@ int main(int argc, char* argv[])
                                 }
                               }
                                 free(thread_handles);
-                              free(arrayA);  free(arrayB);
+                              free(arrayA);  free(arrayC);
 
 
                              return 0;
