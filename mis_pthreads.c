@@ -1,5 +1,5 @@
 /*
-MIS v1.0: This code computes a maximal independent set using Luby's algorithm.
+MIS v1.1: This code computes a maximal independent set using Luby's algorithm.
 
 Copyright (c) 2015, Texas State University. All rights reserved.
 
@@ -36,14 +36,16 @@ Author: Martin Burtscher <burtscher@txstate.edu>
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits.h>
 #include <sys/time.h>
 
-static void findmins(const int* const nidx, const int* const nlist, const int nodes, const int edges, unsigned int* const random, char* const nstat, int* updated)
+static const unsigned int rand_max = 0xffffffff;
+static const int in = 1;
+static const int out = 2;
+
+static void findmins(const int* const nidx, const int* const nlist, const int nodes, unsigned int* const random, char* const nstat, int* updated)
 {
-  const unsigned int rand_max = 0xffffffff;
   for (int v = 0; v < nodes; v++) {
-    if (random[v] != rand_max) {
+    if (nstat[v] == 0) {
       // check all direct neighbors for a lower random number
       int i = nidx[v];
       while ((i < nidx[v + 1]) && ((random[v] < random[nlist[i]]) || ((random[v] == random[nlist[i]]) && (v < nlist[i])))) {
@@ -52,11 +54,10 @@ static void findmins(const int* const nidx, const int* const nlist, const int no
       // if v is lowest include it
       if (i >= nidx[v + 1]) {
         *updated = 1;
-        nstat[v] = 1;
-        random[v] = rand_max;
+        nstat[v] = in;
         for (int i = nidx[v]; i < nidx[v + 1]; i++) {
           random[nlist[i]] = rand_max;
-          nstat[nlist[i]] = 2;
+          nstat[nlist[i]] = out;
         }
       }
     }
@@ -69,10 +70,11 @@ static unsigned int hash(unsigned int val)
   val = ((val >> 16) ^ val) * 0x45d9f3b;
   val = ((val >> 16) ^ val) * 0x45d9f3b;
   val = ((val >> 16) ^ val);
+  if (val == rand_max) val--;
   return val;
 }
 
-static void luby(const int* const nidx, const int* const nlist, const int nodes, const int edges, char* const nstat)
+static void luby(const int* const nidx, const int* const nlist, const int nodes, char* const nstat)
 {
   // set up pseudo random numbers
   unsigned int* random = (unsigned int*)malloc(nodes * sizeof(unsigned int));
@@ -85,7 +87,7 @@ static void luby(const int* const nidx, const int* const nlist, const int nodes,
   int updated;
   do {
     updated = 0;
-    findmins(nidx, nlist, nodes, edges, random, nstat, &updated);
+    findmins(nidx, nlist, nodes, random, nstat, &updated);
   } while (updated != 0);
 
   free(random);
@@ -93,7 +95,7 @@ static void luby(const int* const nidx, const int* const nlist, const int nodes,
 
 int main(int argc, char* argv[])
 {
-  printf("Maximal Independent Set v1.0 [serial]\n");
+  printf("Maximal Independent Set v1.1 [serial]\n");
 
   // check command line
   if (argc != 2) {fprintf(stderr, "usage: %s input_file_name\n", argv[0]); exit(-1);}
@@ -134,7 +136,7 @@ int main(int argc, char* argv[])
   // time computation
   struct timeval start, end;
   gettimeofday(&start, NULL);
-  luby(neighborindex, neighborlist, nodes, edges, nodestatus);
+  luby(neighborindex, neighborlist, nodes, nodestatus);
   gettimeofday(&end, NULL);
 
   // print performance info
@@ -142,17 +144,33 @@ int main(int argc, char* argv[])
   printf("compute time: %.4f s\n", runtime);
   printf("mega_nodes/sec: %.3f\n", nodes * 0.000001 / runtime);
 
-  // verify result
+  // output result
   int count = 0;
-  for (int i = 0; i < nodes; i++) {
-    if (nodestatus[i] == 0) {fprintf(stderr, "found unprocessed node\n"); exit(-1);}
-    if (nodestatus[i] == 1) {
+  for (int v = 0; v < nodes; v++) {
+    if (nodestatus[v] == in) {
       count++;
     }
   }
-
-  // output result
   printf("number of elements in maxmimal independent set: %d (%.1f%%)\n", count, 100.0 * count / nodes);
+
+  // verify result
+  for (int v = 0; v < nodes; v++) {
+    if (nodestatus[v] == 0) {fprintf(stderr, "error: found unprocessed node in graph\n"); exit(-1);}
+    if (nodestatus[v] == in) {
+      for (int i = neighborindex[v]; i < neighborindex[v + 1]; i++) {
+        if (nodestatus[neighborlist[i]] == in) {fprintf(stderr, "error: found adjacent nodes in MIS\n"); exit(-1);}
+      }
+    } else {
+      if (nodestatus[v] != out) {fprintf(stderr, "error: encountered invalid node status\n"); exit(-1);}
+      int flag = 0;
+      for (int i = neighborindex[v]; i < neighborindex[v + 1]; i++) {
+        if (nodestatus[neighborlist[i]] == in) {
+          flag = 1;
+        }
+      }
+      if (flag == 0) {fprintf(stderr, "error: set is not maximal\n"); exit(-1);}
+    }
+  }
 
   free(neighborindex);  free(neighborlist);  free(nodestatus);
   return 0;
