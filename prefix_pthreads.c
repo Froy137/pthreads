@@ -122,9 +122,9 @@ int main(int argc, char* argv[])
                              //loading the carries to new array
                                 //for(int chk=chunk_size;chk<size;chk+chunk_size){
                                  
-                                for(int u=0;u<thread_count;u++){
-                                    int r=(u+1)*size/thread_count;
-                                    lastPrefix[u]=arrayC[r-1];   
+                                for(long u=0;u<thread_count;u++){
+                                    long r=(u+1)*size/thread_count;
+                                    lastPrefix[u]=arrayC[r-1.0];   
                                 }
 
                                  //       for(int v=0;v<thread_count;v++){
@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
                                 // printf("Array A after Prefix+ %d\n",arrayA[v]);   
                                 //}
     
-                              for (int i = 0; i < size; i++) {
+                              for (long i = 0; i < size; i++) {
                                 if (arrayA[i] != arrayC[i]) 
                                 {
                                     fprintf(stderr, "result mismatch at position %d\n", i);  
@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
 
                                 }
                               }
-
+                                free(thread_handles);
                               free(arrayA);  free(arrayB);
 
 
@@ -210,7 +210,7 @@ static void* pthreadCalc(void* rank){
 	prefixSumA(tempArr,myS);
 	
     c=0;
-    for(int y=my_start;y<my_end;y++){
+    for(long y=my_start;y<my_end;y++){
         arrayC[y]=tempArr[c];
         c++;
     }
