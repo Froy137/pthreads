@@ -229,7 +229,7 @@ static void* pthreadCalc(void* rank){
         c++;
     }
     printf("\nrank in assign%llu:\n",my_rank);
-	free(tempArr);
+	//free(tempArr);
 	return NULL;
 }
 
