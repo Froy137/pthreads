@@ -119,8 +119,9 @@ int main(int argc, char* argv[])
                                 //for(int chk=chunk_size;chk<size;chk+chunk_size){
                                  
                                 for(int u=0;u<thread_count;u++){
+									printf("in bad area?");
                                     long r=(u+1)*size/thread_count;
-									r--;
+									r=r-1.0;;
                                     lastPrefix[u]=arrayC[r];   
                                 }
 
