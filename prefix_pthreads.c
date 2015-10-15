@@ -35,7 +35,6 @@ static void prefixSumB(int data[], const int size)
 //global vars
 static long long thread_count;
 static int*arrayA;
-//static int*arrayB;
 static int*arrayC;
 static int*lastPrefix;
 static int size;
@@ -157,7 +156,7 @@ int main(int argc, char* argv[])
                                //for(int v=0;v<size;v++){
                                 // printf("Array C after Prefix+ %d\n",arrayC[v]);   
                                 //}
-                                free(thread_handles);
+                                //free(thread_handles);
                               gettimeofday(&end, NULL);
 
                               // print performance info
