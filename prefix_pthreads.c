@@ -34,9 +34,9 @@ static void prefixSumB(int data[], const int size)
 
 //global vars
 static long long thread_count;
-static int*arrayA;
-static int*arrayB;
-static int*arrayC;
+static long*arrayA;
+//static int*arrayB;
+static long*arrayC;
 static int*lastPrefix;
 static int size;
 
@@ -57,14 +57,14 @@ int main(int argc, char* argv[])
 
 
                             // allocate arrays
-                               arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
+                               arrayA = (long*)malloc(sizeof(long) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
 
                                 
-                            arrayB = (int*)malloc(sizeof(int) * size);  if (arrayB == NULL) {fprintf(stderr, "cannot allocate arrayB\n");  exit(-1);}
+                          
 
                                
-                            arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
-                               lastPrefix= (int*)malloc(sizeof(int) * thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");                                  exit(-1);}
+                            arrayC = (long*)malloc(sizeof(long) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
+                               lastPrefix= (long*)malloc(sizeof(long) * thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");                                  exit(-1);}
 
                                
 
