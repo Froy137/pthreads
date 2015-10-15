@@ -91,15 +91,15 @@ int main(int argc, char* argv[])
                               for (thread=0;thread<templ;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc,(void*) thread);
                               }
-
-                               
-                                //master doing work too.      
-                                pthreadCalc((void*)templ);
-
                                 //join threads
                                 for (thread=0;thread<templ;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
+                               
+                                //master doing work too.      
+                                pthreadCalc((void*)templ);
+
+
 			printf("JOINED THREADS 1\n");
 			printf("threadcount:%llu\n",thread_count);
                                for(int v=0;v<size;v++){
