@@ -101,9 +101,10 @@ int main(int argc, char* argv[])
                                   pthread_join(thread_handles[thread],NULL);
                               }
     
-                               //     for(int v=0;v<size;v++){
-                                // printf("Array C %d\n");   
-                                //}
+                               for(int v=0;v<size;v++){
+								if(v > size-10)//print last chunk
+                                   printf("Array C %d\n",arraC[v]);   
+                                }
     
     
     
@@ -122,16 +123,18 @@ int main(int argc, char* argv[])
                                     lastPrefix[u]=arrayC[r-1];   
                                 }
 
-                                 //       for(int v=0;v<thread_count;v++){
-                                 //printf("lastPrefix %d\n",lastPrefix[v]);   
-                                //}
+                                        for(int v=0;v<thread_count;v++){
+											if(v > size-10)//print last chunk
+											printf("lastPrefix %d\n",lastPrefix[v]);   
+                                }
     
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
 
-                                 //       for(int v=0;v<thread_count;v++){
-                                 //printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
-                                //}
+                                 for(int v=0;v<thread_count;v++){
+									 if(v > size-10)//print last chunk
+                                 printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
+                                }
     
     
                                 //create threads again
@@ -151,10 +154,11 @@ int main(int argc, char* argv[])
                               }
 
     
-                               //for(int v=0;v<size;v++){
-                                // printf("Array C after Prefix+ %d\n",arrayC[v]);   
-                                //}
-                                //free(thread_handles);
+                               for(int v=0;v<size;v++){
+								   if(v > size-10)//print last chunk
+                                   printf("Array C after Prefix+ %d\n",arrayC[v]);   
+                                }
+                               
                               gettimeofday(&end, NULL);
 
                               // print performance info
@@ -165,9 +169,10 @@ int main(int argc, char* argv[])
                               // compare results
                               prefixSumA(arrayA, size);
     
-                                //        for(int v=0;v<size;v++){
-                                // printf("Array A after Prefix+ %d\n",arrayA[v]);   
-                                //}
+                                       for(int v=0;v<size;v++){
+										   if(v > size-10)//print last chunk
+										printf("Array A after Prefix+ %d\n",arrayA[v]);   
+                                }
     
                               for (int i = 0; i < size; i++) {
                                 if (arrayA[i] != arrayC[i]) 
