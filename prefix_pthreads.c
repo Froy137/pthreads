@@ -202,6 +202,12 @@ static void* pthreadCalc(void* rank){
 	long my_end = (my_rank + 1.0) * size / thread_count;
 	printf("\nrank in %llu:\n",my_rank);
 	long myS=size/thread_count;
+	
+	
+	printf("\start in %llu:    %llu:\n",my_rank,my_start);
+	printf("\end in %llu:      %llu:\n",my_rank,my_end);
+	printf("\mysVAL in %llu:   %llu:\n",my_rank,myS);
+	
     printf("\nrank in mys%llu:\n",my_rank);
     //creating a temp array for local prefix solution
 	//int tempArr[myS];
