@@ -142,8 +142,9 @@ int main(int argc, char* argv[])
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc2,(void*) thread);
                               }
-printf("Array C %d\n"); 
-                                  //master doing work too.      
+                                
+                                printf("Array C %d\n"); 
+                               //master doing work too.      
                                // long templ=thread_count-1.0;
                                 pthreadCalc2((void*)templ);
 
@@ -192,16 +193,16 @@ printf("Array C %d\n");
 
 static void* pthreadCalc(void* rank){
 	long long my_rank = (long long)rank;
-	int my_start = my_rank * size / thread_count;
-	int my_end = (my_rank + 1) * size / thread_count;
+	long my_start = my_rank * size / thread_count;
+	long my_end = (my_rank + 1.0) * size / thread_count;
 	
 	int myS=my_end-my_start;
     
     //creating a temp array for local prefix solution
-	int tempArr[myS];
-	int c=0;
+	long tempArr[myS];
+	long c=0;
     //getting partial array.
-    for(int p=my_start;p<my_end;p++){
+    for(long p=my_start;p<my_end;p++){
         //loading the corresponding part of the array into temp
         tempArr[c]=arrayA[p];
         c++;
@@ -220,14 +221,14 @@ static void* pthreadCalc(void* rank){
 
 static void* pthreadCalc2(void* rank){
 	long long my_rank = (long long)rank;
-	int my_start = my_rank * size / thread_count;
-	int my_end = (my_rank + 1) * size / thread_count;
+	long my_start = my_rank * size / thread_count;
+	long my_end = (my_rank + 1.0) * size / thread_count;
 	
     
     //get your index from lastPrefix and subtract last value from arrayC
-    int additionValue=lastPrefix[my_rank]-arrayC[my_end-1];
+    int additionValue=lastPrefix[my_rank]-arrayC[my_end-1.0];
     
-   for(int y=my_start;y<my_end;y++){
+   for(long y=my_start;y<my_end;y++){
         arrayC[y]+=additionValue;
     }
     
