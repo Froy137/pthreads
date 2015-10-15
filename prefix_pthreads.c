@@ -226,7 +226,8 @@ static void* pthreadCalc2(void* rank){
 	
     
     //get your index from lastPrefix and subtract last value from arrayC
-    int additionValue=lastPrefix[my_rank]-arrayC[my_end-1.0];
+    long tempo=my_end-1.0;
+    int additionValue=lastPrefix[my_rank]-arrayC[tempo];
     
    for(long y=my_start;y<my_end;y++){
         arrayC[y]+=additionValue;
