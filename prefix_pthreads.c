@@ -123,10 +123,10 @@ int main(int argc, char* argv[])
                                     lastPrefix[u]=arrayC[r-1];   
                                 }
 
-                                        for(int v=0;v<thread_count;v++){
-											if(v > size-10)//print last chunk
-											printf("lastPrefix %d\n",lastPrefix[v]);   
-                                }
+                                       // for(int v=0;v<thread_count;v++){
+									//		if(v > size-10)//print last chunk
+									//		printf("lastPrefix %d\n",lastPrefix[v]);   
+                                //}
     
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc2,(void*) thread);
                               }
                                 
-                                printf("Array C %d\n"); 
+                               // printf("Array C %d\n"); 
                                //master doing work too.      
                                 pthreadCalc2((void*)templ);
 
