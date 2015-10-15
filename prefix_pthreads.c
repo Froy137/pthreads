@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
     
                                for(int v=0;v<size;v++){
 								if(v > size-10)//print last chunk
-                                   printf("Array C %d\n",arraC[v]);   
+                                   printf("Array C %d\n",arrayC[v]);   
                                 }
     
     
