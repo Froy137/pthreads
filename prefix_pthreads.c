@@ -82,10 +82,10 @@ int main(int argc, char* argv[])
                                
 
 
-                                for(int v=0;v<size;v++){
-								if(v > size-10)//print last chunk
-                                    printf("Array A %d\n",arrayA[v]);   
-                                }
+                             //   for(int v=0;v<size;v++){
+							//	if(v > size-10)//print last chunk
+                             //       printf("Array A %d\n",arrayA[v]);   
+                             //   }
     
                                 //generating -1 thread so that master thread can work too.
                               for (thread=0;thread<thread_count-1.0;thread++){
@@ -101,10 +101,10 @@ int main(int argc, char* argv[])
                                   pthread_join(thread_handles[thread],NULL);
                               }
     
-                               for(int v=0;v<size;v++){
-								if(v > size-10)//print last chunk
-                                   printf("Array C %d\n",arrayC[v]);   
-                                }
+                             //  for(int v=0;v<size;v++){
+							//	if(v > size-10)//print last chunk
+                             //      printf("Array C %d\n",arrayC[v]);   
+                             //   }
     
     
     
@@ -131,9 +131,9 @@ int main(int argc, char* argv[])
                                 //doing prefix sum on the carries
                                 prefixSumA(lastPrefix,(int)thread_count);
 
-                                 for(int v=0;v<thread_count;v++){
-									 if(v > size-10)//print last chunk
-                                 printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
+                              //   for(int v=0;v<thread_count;v++){
+								//	 if(v > size-10)//print last chunk
+                              //   printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
                                 }
     
     
@@ -144,7 +144,6 @@ int main(int argc, char* argv[])
                                 
                                 printf("Array C %d\n"); 
                                //master doing work too.      
-                               // long templ=thread_count-1.0;
                                 pthreadCalc2((void*)templ);
 
 
@@ -154,10 +153,10 @@ int main(int argc, char* argv[])
                               }
 
     
-                               for(int v=0;v<size;v++){
-								   if(v > size-10)//print last chunk
-                                   printf("Array C after Prefix+ %d\n",arrayC[v]);   
-                                }
+                              // for(int v=0;v<size;v++){
+								//   if(v > size-10)//print last chunk
+                              //     printf("Array C after Prefix+ %d\n",arrayC[v]);   
+                              //  }
                                
                               gettimeofday(&end, NULL);
 
