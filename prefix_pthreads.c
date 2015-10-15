@@ -213,7 +213,7 @@ static void* pthreadCalc(void* rank){
     }
     printf("\nrank in loading%llu:\n",my_rank);
 	prefixSumA(tempArr,myS);
-	printf("done with prefix");
+	printf("done with prefix %llu\n",my_rank);
     c=0;
     for(int y=my_start;y<my_end;y++){
         arrayC[y]=tempArr[c];
