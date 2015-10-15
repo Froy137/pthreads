@@ -200,25 +200,26 @@ static void* pthreadCalc(void* rank){
 	long my_end = (my_rank + 1.0) * size / thread_count;
 	printf("\nrank in %llu:\n",my_rank);
 	long myS=my_end-my_start;
-    
+    printf("done with mys");
     //creating a temp array for local prefix solution
 	int tempArr[myS];
 	int c=0;
-    //getting partial array.
+    printf("done with tempArr");
+	//getting partial array.
 	    for(int p=my_start;p<my_end;p++){
         //loading the corresponding part of the array into temp
         tempArr[c]=arrayA[p];
         c++;
     }
-    
+    printf("done with loading");
 	prefixSumA(tempArr,myS);
-	
+	printf("done with prefix");
     c=0;
     for(int y=my_start;y<my_end;y++){
         arrayC[y]=tempArr[c];
         c++;
     }
-    
+    printf("done with last asssign");
 	return NULL;
 }
 
