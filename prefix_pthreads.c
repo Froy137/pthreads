@@ -120,8 +120,8 @@ int main(int argc, char* argv[])
                                  
                                 for(int u=0;u<thread_count;u++){
                                     long r=(u+1)*size/thread_count;
-									
-                                    lastPrefix[u]=arrayC[(int)r-1.0];   
+									r--;
+                                    lastPrefix[u]=arrayC[r];   
                                 }
 
                                         for(int v=0;v<thread_count;v++){
