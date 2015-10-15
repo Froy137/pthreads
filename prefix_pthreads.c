@@ -119,8 +119,8 @@ int main(int argc, char* argv[])
                                 //for(int chk=chunk_size;chk<size;chk+chunk_size){
                                  
                                 for(int u=0;u<thread_count;u++){
-                                    int r=(u+1)*size/thread_count;
-                                    lastPrefix[u]=arrayC[r-1];   
+                                    long r=(u+1)*size/thread_count;
+                                    lastPrefix[u]=arrayC[r-1.0];   
                                 }
 
                                         for(int v=0;v<thread_count;v++){
