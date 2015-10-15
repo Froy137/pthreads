@@ -223,8 +223,10 @@ static void* pthreadCalc(void* rank){
         c++;
     }
     printf("\nrank in loading%llu:\n",my_rank);
+	if(my_rank != thread_count)
 	prefixSumA(tempArr,myS);
-	
+	else
+		prefixSumA(tempArr,myS+1);
 	for(int t=0;t<myS;t++){
 		
 		printf("tempPREXI CONT: %d\n",tempArr[t]);
