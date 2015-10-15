@@ -100,7 +100,8 @@ int main(int argc, char* argv[])
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_join(thread_handles[thread],NULL);
                               }
-							printf("JOINED THREADS 1\n");
+			printf("JOINED THREADS 1\n");
+			printf("threadcount:%llu\n",thread_count);
                                for(int v=0;v<size;v++){
 								if(v > size-10)//print last chunk
                                    printf("Array C %d\n",arrayC[v]);   
