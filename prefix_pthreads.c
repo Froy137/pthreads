@@ -63,8 +63,8 @@ int main(int argc, char* argv[])
                           
 
                                
-                            arrayC = (long*)malloc(sizeof(long) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
-                               lastPrefix= (long*)malloc(sizeof(long) * thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");                                  exit(-1);}
+                                  arrayC = (long*)malloc(sizeof(long) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
+                               lastPrefix= (long*)malloc(sizeof(long) * (long)thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate                                                   partialPrefix\n");                                  exit(-1);}
 
                                
 
@@ -177,8 +177,8 @@ int main(int argc, char* argv[])
                                 {
                                     fprintf(stderr, "result mismatch at position %d\n", i);  
 
-                                    printf("current A:%d current B:%d\n",arrayA[i],arrayB[i]);
-                                    printf("Next A:%d Next B:%d\n",arrayA[i+1],arrayB[i+1]);
+                                  //  printf("current A:%d current B:%d\n",arrayA[i],arrayB[i]);
+                                //    printf("Next A:%d Next B:%d\n",arrayA[i+1],arrayB[i+1]);
                                     exit(-1);
 
                                 }
