@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
                                     lastPrefix[u]=arrayC[r];   
                                 }
 
-                                        for(int v=0;v<thread_count;v++){
+                               for(int v=0;v<thread_count;v++){
 										if(v > size-10)//print last chunk
 											printf("lastPrefix %d\n",lastPrefix[v]);   
                                 }
@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
                                  printf("lastPrefix AFTER Prefix + %d\n",lastPrefix[v]);   
                                 }
     
-    
+    /*
                                 //create threads again
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc2,(void*) thread);
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
                                   pthread_join(thread_handles[thread],NULL);
                               }
 
-    
+    */
                                for(int v=0;v<size;v++){
 								   if(v > size-10)//print last chunk
                                    printf("Array C after Prefix+ %d\n",arrayC[v]);   
