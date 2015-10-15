@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
                               }
     
                                //     for(int v=0;v<size;v++){
-                                // printf("Array C %d\n",arrayC[v]);   
+                                 printf("Array C %d\n");   
                                 //}
     
     
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
                                 for (thread=0;thread<thread_count-1.0;thread++){
                                   pthread_create(&thread_handles[thread],NULL,pthreadCalc2,(void*) thread);
                               }
-
+printf("Array C %d\n"); 
                                   //master doing work too.      
                                // long templ=thread_count-1.0;
                                 pthreadCalc2((void*)templ);
