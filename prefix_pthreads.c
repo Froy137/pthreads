@@ -54,16 +54,11 @@ int main(int argc, char* argv[])
                               
                                printf("configuration: %d elements, %llu threads.\n", size,thread_count);	
 
-
+								int fPref=(int)thread_count;
                             // allocate arrays
                                arrayA = (int*)malloc(sizeof(int) * size);  if (arrayA == NULL) {fprintf(stderr, "cannot allocate arrayA\n");  exit(-1);}
-
-                                
-                          
-
-                               
-                                  arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
-                               lastPrefix= (int*)malloc(sizeof(int) * thread_count);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate                                                   partialPrefix\n");                                  exit(-1);}
+                               arrayC = (int*)malloc(sizeof(int) * size);  if (arrayC == NULL) {fprintf(stderr, "cannot allocate arrayC\n");  exit(-1);}
+                               lastPrefix= (int*)malloc(sizeof(int) * fPref);  if (lastPrefix == NULL) {fprintf(stderr, "cannot allocate partialPrefix\n");exit(-1);}
 
                                
 
@@ -87,9 +82,10 @@ int main(int argc, char* argv[])
                                
 
 
-                               // for(int v=0;v<size;v++){
-                                // printf("Array A %d\n",arrayA[v]);   
-                                //}
+                                for(int v=0;v<size;v++){
+								if(v>v/()thread_count*(thread_count-1))//print last chunk
+                                    printf("Array A %d\n",arrayA[v]);   
+                                }
     
                                 //generating -1 thread so that master thread can work too.
                               for (thread=0;thread<thread_count-1.0;thread++){
@@ -106,7 +102,7 @@ int main(int argc, char* argv[])
                               }
     
                                //     for(int v=0;v<size;v++){
-                                 printf("Array C %d\n");   
+                                // printf("Array C %d\n");   
                                 //}
     
     
@@ -218,6 +214,9 @@ static void* pthreadCalc(void* rank){
     
 	return NULL;
 }
+
+
+
 
 static void* pthreadCalc2(void* rank){
 	long long my_rank = (long long)rank;
