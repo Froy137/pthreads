@@ -37,7 +37,7 @@ static long long thread_count;
 static long*arrayA;
 //static int*arrayB;
 static long*arrayC;
-static int*lastPrefix;
+static long*lastPrefix;
 static int size;
 
 //1000000000
